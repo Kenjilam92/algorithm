@@ -26,7 +26,7 @@ function solution (H,Total=null){
     let R = H[1];
     let W = 2;
     let i = 2;
-    if (L==R){
+    if (L===R){
         var smooth = true;
     }
     else{
@@ -34,7 +34,7 @@ function solution (H,Total=null){
     }
     while(i<H.length){
         if (smooth){
-            if(R=H[i]){
+            if(R===H[i]){
                 W++;
                 i++;
             }
