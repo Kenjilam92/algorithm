@@ -10,6 +10,8 @@ console.log(solution(ex2));
 console.log(solution(ex3));
 console.log(solution(ex4));
 console.log(solution(ex5));
+console.log(solution(ex6));
+console.log(solution(ex7));
 
 function solution(H,Total=null) {
     // write your code in JavaScript (Node.js 8.9.4)
@@ -66,50 +68,31 @@ function solution(H,Total=null) {
         Total+=CalculationEnd(L,R,W);
         return Total;
     }
-    else {
+    else if (L>R){
+        
         while (i<H.length){
-            if (L>R){
-                if (L>H[i]){
-                    W++; 
-                    i++;
-                }
-                else if (L===H[i]){
-                    W++;
-                    if(i===H.length-1){
-                        R=H[i];
-                        Total += Calculation(L,R,W); 
-                        return Total;
-                    }
-                    else if(L!==H[i+1]){
-                        R=H[i];
-                        i++;
-                        Total += Calculation(L,R,W); 
-                        return solution(H.slice(i,H.length),Total);
-                    }
-                    i++;
-                }
-                else {
-                    R=H[i-1];
-                    Total+=Calculation(L,R,W);
-                    return (H.slice(i,H.length),Total);
-                }
+            
+           
+        }
+        
+        Total+=Calculation(L,R,W);
+        return Total;
+    }
+    else{//L<R
+        while(i<H.length){
+            if (R<=H[i]){
+                R=H[i];
+                W++;
+                i++;
             }
-            else{//L<R
-                if (R<=H[i]){
-                    R=H[i];
-                    W++;
-                    i++;
-                }
-                else {
-                    Total=CalculationEnd(L,R,W);
-                    return solution(H.slice(i,H.length),Total);
-                }
+            else {
+                Total=CalculationEnd(L,R,W);
+                return solution(H.slice(i,H.length),Total);
             }
         }
         Total+=CalculationEnd(L,R,W);
         return Total;
     }
-    
 }
 
 function Calculation(l,r,w){
