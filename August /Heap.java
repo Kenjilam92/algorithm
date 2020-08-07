@@ -7,9 +7,18 @@ import java.util.*;
 class Solution {
     public int solution(int[] A) {
         // write your code in Java SE 8
-        sortHeap(A);
-        // System.out.println(sortHeap(A));
-        return 1;
+        int[] temp = sortHeap(A);
+        int min = 1; 
+        for (int i=0; i<temp.length; i++){
+            if (temp[i]==min){
+                min++;
+            }
+            else if(temp[i]>0 && temp[i]>min){
+                break;
+            }
+        }
+        
+        return min;
     }
     public int[] sortHeap(int[] A){
         Heap temp = new Heap();
@@ -19,7 +28,7 @@ class Solution {
         int[] B = new int[A.length];
         for ( int i=0; i < A.length ; i++){
             
-            System.out.println(temp.removeFirst());
+            B[i]=temp.removeFirst();
             
         }
         return B;
@@ -60,12 +69,25 @@ class Heap {
         while( n < (int)this.List.size()){
             int c1 = 2*n;
             int c2 = (2*n) + 1;
-            if (c1 > this.List.size() || c2 > this.List.size()){
-                break;
-            }
             int p = this.List.get(n);
-            int a = this.List.get(c1);
-            int b = this.List.get(c2);
+            int a = 0;
+            int b = 0;
+            if (c1 < this.List.size() ){
+                a = this.List.get(c1);
+            }
+            else {
+                a = p;
+            }
+            
+            if (c2 < this.List.size() ){
+                b = this.List.get(c2);
+            }  
+            else {
+                b = p;
+            }
+           
+                
+            
             if ( p >a && p > b ) {
                 if ( a > b ) {
                     Collections.swap(this.List, n, c2);
