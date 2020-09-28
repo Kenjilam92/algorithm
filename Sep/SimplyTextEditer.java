@@ -7,25 +7,22 @@ public class Solution {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
         String S = "";
         AmazingS temp = new AmazingS();
-        temp.add(S);
-        // temp.print();
         Scanner scanner = new Scanner(System.in);
         int myInt = scanner.nextInt();
         
         for (int i=0; i< myInt ; i++){
-            // System.out.print (i);
             int t = Integer.parseInt(scanner.next());
             if ( t == 1 ){
-                S = append ( scanner.next() , S );
                 temp.add(S);
-                // temp.print();
+                S = S + scanner.next();
+                
             }
             else if ( t == 2 ){
-                S = delete ( Integer.parseInt(scanner.next()) , S);
                 temp.add(S);
+                S = S.substring(0, S.length() - scanner.nextInt() );
             }
             else if ( t == 3 ){
-                print( Integer.parseInt(scanner.next()) , S);
+                System.out.println(S.charAt(scanner.nextInt()-1));
             }
             else if ( t == 4 ){
                 S= temp.undo();
@@ -33,31 +30,9 @@ public class Solution {
             else {
                 System.out.println("?");
             }
-            // System.out.println ( scanner.next() );
         }
         scanner.close();
     }   
-    
-        //1. append()
-    public static String append( String W, String S ){
-        return S+W;
-    }  
-        //2. delete
-    public static String delete (int k, String S){
-        for (int i= 0; i<k; i++ ){
-            S= S.substring(0, S.length()-1);
-            // System.out.println (S);
-        }
-        return S;
-    }
-        //3. print
-    public static void print ( int k, String S ){
-        System.out.println(S.charAt(k-1));
-    }
-        //4. undo
-    // public static String undo ( AmazingS S, String S ){
-    //     return S.undo;
-    // }
 }
 
 class Node{
@@ -77,25 +52,22 @@ class AmazingS{
     public void add (String S){
         Node newNode= new Node(S);
         if (Head == null){
-            Head= newNode;
+            Head = newNode;
         }
         else{
-            Node runner = Head;
-            while (runner.next != null){
-                runner = runner.next;
-            }
-            runner.next= newNode;
+            newNode.next = Head;
+            Head = newNode;
         }
     }
     public String undo() {
-        Node runner = Head;
-        Node follower = runner;
-        while (runner.next != null){
-            follower = runner;
-            runner = runner.next;
+        if (Head == null){
+            return "";
         }
-        follower.next = null;
-        return follower.value;
+        Node result = Head;
+        Head = result.next;
+        result.next = null;
+        // this.print();
+        return result.value;
     }
     public void print(){
         Node runner = Head;
