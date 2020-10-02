@@ -22,13 +22,13 @@ public class Solution {
                 temp.insert( input[1] );
             }
             else if (input[0].equals("find") ){
-                TriNode sellect = temp.findNode( input[0] );
+                TriNode sellect = temp.findNode( input[1] );
                 if (sellect == null){
-                    System.out.println("not found");
+                    // System.out.println("not found");
                     result.add(0);
                 }
                 else{
-                    System.out.println(sellect.value);
+                    // System.out.println(sellect.value);
                     result.add(sellect.count);
                 }
             }
@@ -93,6 +93,7 @@ class Tries {
         String currentValue= "";
         for (Character c: S.toCharArray() ){
             currentValue += c;
+            runner.count++;
             if( !runner.child.containsKey(c)){
                 runner.child.put(c , new TriNode(currentValue) );
             }
@@ -106,6 +107,7 @@ class Tries {
         String currentValue="";
         for ( Character letter : S.toCharArray() ){
             currentValue += letter;
+            // System.out.println(letter);
             if ( !runner.child.containsKey(letter) ){
                 return null; 
             }
