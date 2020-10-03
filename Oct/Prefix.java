@@ -6,38 +6,69 @@ public class Solution {
     public static void main(String[] args) {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
         Scanner scanner = new Scanner(System.in);
-        int lines = scanner.nextInt();
-        String temp1= String.valueOf(scanner.next());
-        ArrayList<String> group = new ArrayList<String>();
-        group.add(temp1);
-        boolean Stream =true;
-        for (int index = 1; index< lines; index++ ){
-            String temp2= String.valueOf(scanner.next());
-            if (temp1.contains(temp2) || temp2.contains(temp1) || checkPrefix(temp2,group)){
+        boolean Stream = true;
+        int list = scanner.nextInt();
+        Tries temp = new Tries();
+        temp.add(String.valueOf(scanner.next()));
+        for (int i=1; i<list; i++){
+            String text = String.valueOf(scanner.next());
+            if(temp.checkPrefix(text)){
                 System.out.println("BAD SET");
-                System.out.println(temp2);
-                Stream =false;
+                System.out.println(text);
+                Stream = false;
                 break;
             }
-            group.add(temp2);
-            temp1= temp2;
+            else{
+                temp.add(text);
+            }
         }
-        if (Stream){
+        if(Stream){
             System.out.println("GOOD SET");
         }
         scanner.close();
     }
+}
 
-    public static boolean checkPrefix( String text, ArrayList<String> group){
-        if (group.contains(text)){
-            return true;
+class TriNode {
+    public String value;
+    public boolean isWord = false;
+    public HashMap<Character,TriNode> child;
+    public TriNode(String text){
+        value = text;
+        child = new HashMap<Character, TriNode>();
+    }
+}
+class Tries{
+    public TriNode Root;
+    public Tries(){
+        Root = new TriNode(""); 
+    }
+    public void add(String text){
+        String currentValue= "";
+        TriNode runner = Root;
+        for (Character letter: text.toCharArray() ){
+            currentValue+= letter;
+            if (!runner.child.containsKey(letter)){
+                runner.child.put( letter ,new TriNode(currentValue));
+            }
+            runner= runner.child.get(letter);
         }
-        for (int i=0; i < group.size(); i++){
-            String temp = group.get(i);
-            if(temp.contains(text)){
+        runner.isWord = true;
+    }
+    public boolean checkPrefix (String text){
+        // String currentValue="";
+        TriNode runner = Root;
+        for (Character letter: text.toCharArray() ){
+            if(runner.child.containsKey(letter)){
+                runner = runner.child.get(letter);
+            }
+            else if(runner.isWord){
                 return true;
             }
+            else{
+                return false;
+            }
         }
-        return false;
+        return true; 
     }
 }
